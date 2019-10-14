@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MusicStore.Models.Album>
+
+@{
+    ViewBag.Title = "Search for Songs";
+}
+<!--This code is applied below the top bar. It displays a space to input the word,
+    and the code searches for songs with the same characters. You can also add the
+    song to your cart.-->
+<h2 style="font-weight: bold;text-align:center;">Music Search</h2>
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr style="background-color:white">
+            <td style="border:5px solid red;padding:0;">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td style="border:5px solid red;padding:0;">
+                @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td style="border:5px solid red;padding:0;">
+                @Html.DisplayFor(modelItem => item.Artist.Name)
+            </td>
+            <td style="border:5px solid red;padding:0;">
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td style="border:5px solid red;padding:0;">
+                <!--Adds a button to add the option to the cart-->
+                <a href=" @Url.Action("AddToCart","Store",new { AlbumId = item.AlbumId })">
+                    <button class="btn btn-primary">Add to Cart</button>
+                </a>
+            </td>
+        </tr>
+
+    }
+
+</table>

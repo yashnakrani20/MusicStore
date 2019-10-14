@@ -1,0 +1,78 @@
+﻿@model IEnumerable<MusicStore.Models.Cart>
+
+@{
+    ViewBag.Title = "ShoppingCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //for cart total//
+    Decimal CartTotal = 0;
+}
+
+<body background="~/Content/Images/shoppingcart.jpeg"> 
+    </body>
+
+<h2>ShoppingCart</h2>
+
+<table class="table">
+    <tr>
+         <th>
+            @Html.DisplayNameFor(model => model.Album.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CartId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    //logic for keeping cart total updated//
+    CartTotal += item.Album.Price * item.Count;
+    
+    
+    <tr>
+        <td>
+                @Html.DisplayFor(modelItem => item.Album.Title)
+            <br />
+            <img src="@item.Album.AlbumArtUrl" alt="cover" />
+       </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CartId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Album.Price)
+        </td>
+      
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.RecordId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RecordId }) |*@
+            @Html.ActionLink("Remove", "RemoveFromCart", new { id = item.RecordId }, new { @class = "text-danger" })
+        </td>
+    </tr>
+}
+    <tr>
+        <td>
+            <a href="/Store">
+                <button class="btn btn-primary">Back to Store</button>
+            </a>
+        </td>
+        <td>
+            <div>@String.Format("{0:c}", CartTotal )</div>
+        </td>
+        <td>
+            <a href="/Store/Checkout" class=" pull-right">
+                <button class="btn btn-success">Checkout</button>
+            </a>
+        </td>
+    </tr>
+
+
+</table>
